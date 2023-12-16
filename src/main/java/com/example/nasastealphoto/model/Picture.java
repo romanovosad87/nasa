@@ -25,6 +25,7 @@ public class Picture {
     @Column(unique = true)
     private Long nasaId;
 
+    @Column(nullable = false)
     private  String imgSrc;
 
     @CreationTimestamp
