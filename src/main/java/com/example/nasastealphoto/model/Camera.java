@@ -21,7 +21,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(of = "nasaId")
 @Table(name = "cameras")
 public class Camera {
     @Id
