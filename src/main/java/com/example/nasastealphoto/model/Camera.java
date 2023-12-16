@@ -38,7 +38,7 @@ public class Camera {
 
     @Setter(value = AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "camera")
-    @Cascade(CascadeType.ALL)
+    @Cascade(CascadeType.PERSIST)
     List<Picture> pictures = new ArrayList<>();
 
     public void addPicture(Picture picture) {
