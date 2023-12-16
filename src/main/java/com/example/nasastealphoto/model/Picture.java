@@ -1,5 +1,6 @@
 package com.example.nasastealphoto.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -20,10 +21,15 @@ public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private Long nasaId;
+
     private  String imgSrc;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Camera camera;
 }

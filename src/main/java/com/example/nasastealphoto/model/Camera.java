@@ -26,9 +26,12 @@ public class Camera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @Column(unique = true)
     private Long nasaId;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 
