@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -24,22 +25,27 @@ public class NasaService {
     private final CameraService cameraService;
     private final UrlCreator urlCreator;
 
-    public Map<Long, Camera> collectData(String sol) {
-        Map<Long, Camera> camerasMap = new HashMap<>();
-        String url = urlCreator.getUrl(sol);
-        String composedUrl = String.format(url, sol);
-
-        JsonNode node = restTemplate.getForObject(composedUrl, JsonNode.class);
-        JsonNode photos = node.get(PHOTOS);
-        StreamSupport.stream(photos.spliterator(), false)
-                .forEach(photo -> processPhoto(camerasMap, photo));
-        return camerasMap;
-    }
-
     @Transactional
     public void saveData(String sol) {
         Map<Long, Camera> cameras = collectData(sol);
         cameras.values().forEach(cameraService::saveCamera);
+    }
+
+    private Map<Long, Camera> collectData(String sol) {
+        Map<Long, Camera> camerasMap = new HashMap<>();
+        String url = urlCreator.getUrl(sol);
+
+        JsonNode node = restTemplate.getForObject(url, JsonNode.class);
+        JsonNode photos = Optional.ofNullable(node)
+                .stream()
+                .map(n -> n.get(PHOTOS))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException(
+                        String.format("Can't get photos from url: %s", url)));
+
+        StreamSupport.stream(photos.spliterator(), false)
+                .forEach(photo -> processPhoto(camerasMap, photo));
+        return camerasMap;
     }
 
     private void processPhoto(Map<Long, Camera> cameras, JsonNode photo) {

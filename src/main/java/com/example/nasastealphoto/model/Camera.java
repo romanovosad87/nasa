@@ -1,5 +1,6 @@
 package com.example.nasastealphoto.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,9 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.CreationTimestamp;
@@ -36,6 +37,8 @@ public class Camera {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    @ToString.Exclude
+    @JsonBackReference
     @Setter(value = AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "camera")
     @Cascade(CascadeType.PERSIST)
