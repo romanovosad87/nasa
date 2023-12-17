@@ -1,9 +1,13 @@
 --liquibase formatted sql
 --changeset <romanovosad>:<create-tables>
 
+CREATE SEQUENCE cameras_seq;
+
+CREATE SEQUENCE pictures_seq;
+
 CREATE TABLE IF NOT EXISTS cameras
 (
-    id         bigserial,
+    id         bigint DEFAULT NEXT VALUE FOR cameras_seq,
     name       varchar(255) NOT NULL,
     nasa_id    bigint       NOT NULL,
     created_at timestamp    NOT NULL default now(),
@@ -13,7 +17,7 @@ CREATE TABLE IF NOT EXISTS cameras
 
 CREATE TABLE IF NOT EXISTS pictures
 (
-    id         bigserial,
+    id         bigint DEFAULT NEXT VALUE FOR pictures_seq,
     nasa_id    bigint       NOT NULL,
     img_src    varchar(255) NOT NULL,
     created_at timestamp    NOT NULL DEFAULT now(),

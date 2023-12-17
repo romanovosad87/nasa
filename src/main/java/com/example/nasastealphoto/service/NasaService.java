@@ -1,5 +1,6 @@
 package com.example.nasastealphoto.service;
 
+import com.example.nasastealphoto.exception.NasaUrlProcessingException;
 import com.example.nasastealphoto.model.Camera;
 import com.example.nasastealphoto.model.Picture;
 import com.example.nasastealphoto.util.UrlCreator;
@@ -40,7 +41,7 @@ public class NasaService {
                 .stream()
                 .map(n -> n.get(PHOTOS))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException(
+                .orElseThrow(() -> new NasaUrlProcessingException(
                         String.format("Can't get photos from url: %s", url)));
 
         StreamSupport.stream(photos.spliterator(), false)

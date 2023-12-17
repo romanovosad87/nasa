@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,10 +21,11 @@ import java.time.LocalDateTime;
 @Table(name = "pictures")
 public class Picture {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "picture_id_gen")
+    @SequenceGenerator(name = "picture_id_gen", sequenceName = "pictures_seq", allocationSize = 1)
     private Long id;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private Long nasaId;
 
     @Column(nullable = false)
