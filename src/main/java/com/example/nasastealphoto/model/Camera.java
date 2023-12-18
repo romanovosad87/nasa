@@ -2,7 +2,6 @@ package com.example.nasastealphoto.model;
 
 import static jakarta.persistence.CascadeType.PERSIST;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +39,6 @@ public class Camera {
     private LocalDateTime createdAt;
 
     @ToString.Exclude
-    @JsonBackReference
     @Setter(value = AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "camera", cascade = PERSIST)
     List<Picture> pictures = new ArrayList<>();

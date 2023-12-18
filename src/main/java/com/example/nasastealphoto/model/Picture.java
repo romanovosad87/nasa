@@ -1,6 +1,5 @@
 package com.example.nasastealphoto.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,7 +33,6 @@ public class Picture {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     private Camera camera;
 }
