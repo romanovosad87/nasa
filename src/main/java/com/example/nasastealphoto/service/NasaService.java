@@ -7,7 +7,6 @@ import com.example.nasastealphoto.util.UrlCreator;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +25,9 @@ public class NasaService {
     private final CameraService cameraService;
     private final UrlCreator urlCreator;
 
-    @Transactional
     public void saveData(String sol) {
-        Map<Long, Camera> cameras = collectData(sol);
-        cameras.values().forEach(cameraService::saveCamera);
+        Map<Long, Camera> camerasMap = collectData(sol);
+        cameraService.saveCamera(camerasMap);
     }
 
     private Map<Long, Camera> collectData(String sol) {
