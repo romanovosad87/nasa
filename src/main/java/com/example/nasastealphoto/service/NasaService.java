@@ -54,15 +54,20 @@ public class NasaService {
         long cameraNasaId = jsonCamera.get(ID).asLong();
         Camera cameraFromMap = cameras.get(cameraNasaId);
         if (cameraFromMap == null) {
-            Camera camera = new Camera();
-            camera.setName(jsonCamera.get(NAME).asText());
-            camera.setNasaId(cameraNasaId);
-            camera.addPicture(picture);
+            Camera camera = createCamera(picture, jsonCamera, cameraNasaId);
             cameras.put(camera.getNasaId(), camera);
         } else {
             cameraFromMap.addPicture(picture);
             cameras.put(cameraFromMap.getNasaId(), cameraFromMap);
         }
+    }
+
+    private Camera createCamera(Picture picture, JsonNode jsonCamera, long cameraNasaId) {
+        Camera camera = new Camera();
+        camera.setName(jsonCamera.get(NAME).asText());
+        camera.setNasaId(cameraNasaId);
+        camera.addPicture(picture);
+        return camera;
     }
 
     private Picture createPicture(JsonNode photo) {
