@@ -5,6 +5,8 @@ CREATE SEQUENCE cameras_seq;
 
 CREATE SEQUENCE pictures_seq;
 
+CREATE SEQUENCE sols_seq;
+
 CREATE TABLE IF NOT EXISTS cameras
 (
     id         bigint DEFAULT NEXT VALUE FOR cameras_seq,
@@ -25,5 +27,12 @@ CREATE TABLE IF NOT EXISTS pictures
     constraint PK_pictures PRIMARY KEY (id),
     constraint FK_pictures_cameras FOREIGN KEY (camera_id) REFERENCES cameras (id),
     constraint UQ_pictures_nasa_id UNIQUE (nasa_id)
-)
+);
+
+CREATE TABLE IF NOT EXISTS sols(
+    id bigint DEFAULT NEXT VALUE FOR sols_seq,
+    data varchar(10) NOT NULL,
+    constraint PK_sols PRIMARY KEY (id),
+    constraint UQ_sols_data UNIQUE (data)
+);
 

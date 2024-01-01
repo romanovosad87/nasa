@@ -32,7 +32,7 @@ public class Camera {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, updatable = false)
     private Long nasaId;
 
     @CreationTimestamp
@@ -41,7 +41,7 @@ public class Camera {
     @ToString.Exclude
     @Setter(value = AccessLevel.PRIVATE)
     @OneToMany(mappedBy = "camera", cascade = PERSIST)
-    List<Picture> pictures = new ArrayList<>();
+    private List<Picture> pictures = new ArrayList<>();
 
     public void addPicture(Picture picture) {
         pictures.add(picture);
