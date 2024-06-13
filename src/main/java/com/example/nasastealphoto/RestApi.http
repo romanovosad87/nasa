@@ -5,3 +5,6 @@ Content-Type: application/json
 {"sol": "14"}
 
 ###
+
+GET http://localhost:8080/pictures
+Accept: application/json
